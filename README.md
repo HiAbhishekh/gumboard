@@ -156,3 +156,4 @@ Check your webhook URL and make sure the board has Slack updates turned on. Too 
 ### Keep it secure
 
 Don't commit webhook URLs to git - they let anyone post to your Slack.
+# Final implementation ready for review
