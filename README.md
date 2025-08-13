@@ -115,107 +115,47 @@ GITHUB_CLIENT_ID=your_github_client_id
 GITHUB_CLIENT_SECRET=your_github_client_secret
 ```
 
-## 🔔 Slack Integration Setup
+## 🔔 Slack Integration
 
-Gumboard can send notifications to Slack when notes and checklist items are created, updated, or completed. Follow these steps to set up Slack integration:
+Want to get Slack notifications when your team updates notes and checklists? Here's how to set it up.
 
-### 1. Create a Slack App
+### Setting up the Slack App
 
-1. Visit [Slack API Apps](https://api.slack.com/apps)
-2. Click **Create New App** → **From scratch**
-3. Enter:
-   - **App Name**: Gumboard Notifications (or your preferred name)
-   - **Pick a workspace**: Select your workspace
-4. Click **Create App**
+First, you'll need to create a Slack app. Head over to [api.slack.com/apps](https://api.slack.com/apps) and create a new app from scratch. Name it something like "Gumboard" and pick your workspace.
 
-### 2. Configure Incoming Webhooks
+### Getting the Webhook URL
 
-1. In your Slack app dashboard, go to **Features** → **Incoming Webhooks**
-2. Turn on **Activate Incoming Webhooks**
-3. Click **Add New Webhook to Workspace**
-4. Select the channel where you want notifications (e.g., `#general`, `#team-updates`)
-5. Click **Allow**
-6. Copy the webhook URL (it looks like `https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX`)
+Once your app is created, you need to enable incoming webhooks:
+- Go to "Incoming Webhooks" in the sidebar
+- Flip the switch to activate them
+- Add a new webhook to your workspace
+- Pick which channel should get the notifications (I usually go with a dedicated #gumboard channel)
+- Copy that webhook URL - you'll need it in the next step
 
-### 3. Add Webhook URL to Gumboard
+### Connecting to Gumboard
 
-#### For Development:
-Add the webhook URL to your `.env.local` file:
-
+For local development, just add the webhook URL to your `.env.local`:
 ```env
 SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
-#### For Production/Organization Setup:
-1. Log in to your Gumboard instance as an admin
-2. Go to **Settings** → **Organization**
-3. Scroll to the **Slack Integration** section
-4. Paste your webhook URL in the **Slack Webhook URL** field
-5. Click **Save**
+If you're running this in production, log in as an admin and go to Settings → Organization. There's a Slack Integration section where you can paste the webhook URL.
 
-### 4. Notification Settings
+### What gets sent to Slack?
 
-#### Board-Level Control:
-- Each board has a **Send Slack Updates** toggle in board settings
-- Admins can enable/disable Slack notifications per board
-- Test boards (names starting with "Test") automatically skip notifications
+The integration is pretty smart about what it sends. You'll get notifications for:
+- New notes (but only if they have actual content)
+- Checklist items being added, completed, or updated
+- Notes getting archived
 
-#### What Gets Notified:
-- ✅ **New notes** with substantial content
-- ✅ **Checklist items** added to notes  
-- ✅ **Checklist items** marked as completed
-- ✅ **Checklist items** reopened (unchecked)
-- ✅ **Checklist items** content updated
-- ✅ **Notes** archived/completed
+There's built-in deduplication so you won't get spammed if someone rapidly clicks checkboxes. Also, each board has its own toggle to enable/disable Slack updates, and anything starting with "Test" gets ignored automatically.
 
-#### Smart Deduplication:
-- Prevents duplicate messages for the same action within 30 seconds
-- Debounces rapid updates from the same user on the same board
-- Skips notifications for empty or trivial content
+### Troubleshooting
 
-### 5. Message Format
+If notifications aren't showing up, double-check your webhook URL and make sure the board has Slack updates enabled. The webhook needs permission to post in whatever channel you picked.
 
-Slack messages include:
-- 📝 Emoji indicators (➕ for new items, ✅ for completed)
-- 👤 User who performed the action
-- 📋 Board name where the action occurred
-- 📄 Content of the note/checklist item
+If you're getting too many notifications, you can disable them per board or just use a dedicated channel for Gumboard updates.
 
-Example messages:
-```
-➕ Checklist item added: "Review pull request #123" by Alice in Project Board
-✅ Checklist item completed: "Review pull request #123" by Bob in Project Board  
-➕ New note: "Design mockups for landing page" by Charlie in Design Board
-```
+### Security Note
 
-### 6. Troubleshooting
-
-#### No Messages Appearing:
-- Verify the webhook URL is correct and active
-- Check that the Slack app has permission to post to the selected channel
-- Ensure **Send Slack Updates** is enabled for the board
-- Check browser console for error messages
-
-#### Too Many Messages:
-- Adjust the board-level **Send Slack Updates** setting
-- Consider using a dedicated channel for Gumboard notifications
-- The system automatically prevents duplicate messages within 30 seconds
-
-#### Permission Issues:
-- Only organization admins can configure the webhook URL
-- Regular users can create content that triggers notifications
-- Webhook URLs are stored securely and not visible to non-admins
-
-### 7. Advanced Configuration
-
-For custom notification behavior, you can modify:
-- `DEBOUNCE_DURATION` in `lib/slack.ts` (default: 1000ms)
-- `MESSAGE_DEDUPE_WINDOW` in `lib/slack.ts` (default: 30000ms)
-- Message formatting in the `format*ForSlack` functions
-
-### 8. Security Considerations
-
-- Webhook URLs provide write access to your Slack channel
-- Store webhook URLs securely and don't commit them to version control
-- Consider using environment variables for sensitive configuration
-- Regularly rotate webhook URLs if needed
+Keep your webhook URL private - it gives write access to your Slack channel. Don't commit it to version control, use environment variables instead.
