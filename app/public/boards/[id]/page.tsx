@@ -365,7 +365,7 @@ export default function PublicBoardPage({ params }: { params: Promise<{ id: stri
                 Board Not Found
               </CardTitle>
               <CardDescription className="text-zinc-600 dark:text-zinc-400 mt-2">
-                This board doesn't exist or is not publicly accessible.
+                This board doesn&apos;t exist or is not publicly accessible.
               </CardDescription>
             </div>
           </CardHeader>

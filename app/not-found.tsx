@@ -16,7 +16,7 @@ export default function NotFound() {
               Page Not Found
             </CardTitle>
             <CardDescription className="text-zinc-600 dark:text-zinc-400 mt-2">
-              Sorry, we couldn't find the page you're looking for.
+              Sorry, we couldn&apos;t find the page you&apos;re looking for.
             </CardDescription>
           </div>
         </CardHeader>

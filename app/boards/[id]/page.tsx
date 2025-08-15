@@ -908,7 +908,7 @@ export default function BoardPage({ params }: { params: Promise<{ id: string }> 
                 Board Not Found
               </CardTitle>
               <CardDescription className="text-zinc-600 dark:text-zinc-400 mt-2">
-                This board doesn't exist or you don't have access to it.
+                This board doesn&apos;t exist or you don&apos;t have access to it.
               </CardDescription>
             </div>
           </CardHeader>

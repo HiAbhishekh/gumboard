@@ -113,7 +113,9 @@ export function ChecklistItem({
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
-              !readonly && onStartEdit?.(item.id);
+              if (!readonly) {
+                onStartEdit?.(item.id);
+              }
             }
           }}
           tabIndex={readonly ? -1 : 0}
