@@ -35,7 +35,22 @@ export function StatsSection() {
   };
 
   if (loading || !totals) {
-    return null;
+    return (
+      <section className="py-16 bg-gray-50 dark:bg-zinc-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Platform Growth</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              Platform metrics showing the progression from organizations to checklist items
+            </p>
+          </div>
+          
+          <div className="flex items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-2 border-gray-300 border-t-blue-600 dark:border-zinc-700 dark:border-t-blue-400"></div>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (

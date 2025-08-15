@@ -600,6 +600,7 @@ export function Note({
               }
             }}
             className="mt-3 justify-start text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-zinc-100"
+            aria-label="Add new checklist item"
           >
             <Plus className="mr-2 h-4 w-4" />
             Add task

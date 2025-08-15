@@ -124,6 +124,11 @@ export default function OrganizationSettingsPage() {
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
+      setErrorDialog({
+        open: true,
+        title: "Failed to load settings",
+        description: "Unable to fetch organization settings. Please refresh the page.",
+      });
     } finally {
       setLoading(false);
     }
@@ -144,6 +149,11 @@ export default function OrganizationSettingsPage() {
       }
     } catch (error) {
       console.error("Error fetching invites:", error);
+      setErrorDialog({
+        open: true,
+        title: "Failed to load invites",
+        description: "Unable to fetch organization invites.",
+      });
     }
   };
 
@@ -156,6 +166,11 @@ export default function OrganizationSettingsPage() {
       }
     } catch (error) {
       console.error("Error fetching self-serve invites:", error);
+      setErrorDialog({
+        open: true,
+        title: "Failed to load self-serve invites",
+        description: "Unable to fetch self-serve invites.",
+      });
     }
   };
 

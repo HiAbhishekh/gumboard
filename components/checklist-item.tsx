@@ -110,6 +110,15 @@ export function ChecklistItem({
             !readonly && "rounded px-1 py-0.5 hover:bg-transparent"
           )}
           onClick={() => !readonly && onStartEdit?.(item.id)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              !readonly && onStartEdit?.(item.id);
+            }
+          }}
+          tabIndex={readonly ? -1 : 0}
+          role="button"
+          aria-label={`Edit checklist item: ${item.content}`}
         >
           {item.content}
         </span>
