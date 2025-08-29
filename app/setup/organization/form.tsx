@@ -38,8 +38,13 @@ export default function OrganizationSetupForm({ onSubmit }: OrganizationSetupFor
     setTeamEmails(updated);
   };
 
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email.trim());
+  };
+
   const hasValidEmails = () => {
-    return teamEmails.filter((email) => email.trim() && email.includes("@")).length > 0;
+    return teamEmails.filter((email) => isValidEmail(email)).length > 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,7 +53,7 @@ export default function OrganizationSetupForm({ onSubmit }: OrganizationSetupFor
 
     setIsSubmitting(true);
     try {
-      const validEmails = teamEmails.filter((email) => email.trim() && email.includes("@"));
+      const validEmails = teamEmails.filter((email) => isValidEmail(email));
       const result = await onSubmit(orgName.trim(), validEmails);
       if (result?.success) {
         await refreshUser();
