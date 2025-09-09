@@ -40,7 +40,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ProfileDropdown } from "@/components/profile-dropdown";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Shimmer } from "@/components/ui/shimmer";
 import { formatLastActivity } from "@/lib/utils";
 
 // Dashboard-specific extended types
@@ -403,30 +403,51 @@ const DashboardSkeleton = () => {
         <div className="flex justify-between items-center h-16 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <Skeleton className="h-8 w-32" />
+              <Shimmer className="h-8 w-32" />
             </div>
           </div>
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <Skeleton className="h-8 w-32" />
-            <Skeleton className="h-8 w-8 rounded-full" />
+            <Shimmer className="h-9 w-[104px] sm:w-[120px]" />
+            <Shimmer className="h-9 w-9 rounded-full" />
           </div>
         </div>
       </nav>
       <div className="p-4 sm:p-6 lg:p-8">
-        <div className="space-y-4 mb-6">
-          <Skeleton className="h-8 w-32" />
-          <Skeleton className="h-6 w-84" />
+        <div className="space-y-4 mb-8">
+          <Shimmer className="h-7 w-32" />
+          <Shimmer className="h-5 w-[340px]" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6">
+          {/* All Notes Card */}
+          <div className="h-[140px] bg-white dark:bg-zinc-900 shadow-sm rounded-lg border-2 border-blue-200 dark:border-blue-900 p-6">
+            <div className="flex items-center space-x-2 mb-4">
+              <Shimmer className="h-5 w-5" />
+              <Shimmer className="h-6 w-24" />
+            </div>
+            <Shimmer className="h-5 w-48" />
+          </div>
+
+          {/* Archive Card */}
+          <div className="h-[140px] bg-gray-50 dark:bg-zinc-900 shadow-sm rounded-lg border border-gray-200 dark:border-zinc-800 p-6">
+            <div className="flex items-center space-x-2 mb-4">
+              <Shimmer className="h-5 w-5" />
+              <Shimmer className="h-6 w-20" />
+            </div>
+            <Shimmer className="h-5 w-40" />
+          </div>
+
+          {/* Regular Board Cards */}
           {Array.from({ length: skeletonBoardCount }).map((_, i) => (
             <div
               key={i}
-              className="h-full min-h-34 bg-white dark:bg-zinc-900 shadow-sm p-4 rounded-sm flex flex-col justify-between"
+              className="h-[140px] bg-white dark:bg-zinc-900 shadow-sm rounded-lg border border-gray-200 dark:border-zinc-800 p-6"
             >
-              <div>
-                <Skeleton className="h-8 w-32 mb-8" />
-                <Skeleton className="h-6 w-64" />
+              <div className="flex items-center justify-between mb-4">
+                <Shimmer className="h-6 w-32" />
+                <Shimmer className="h-6 w-16 rounded-full" />
               </div>
+              <Shimmer className="h-5 w-full mb-3" />
+              <Shimmer className="h-4 w-32" />
             </div>
           ))}
         </div>
